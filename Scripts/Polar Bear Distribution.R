@@ -37,7 +37,7 @@ lapply(Packages, library, character.only = TRUE)
 
 #' you have to use your own path: setwd("/set/path/to/your/script/")
 getwd()
-setwd("D:\\Programme\\OneDrive\\EAGLE M.Sc\\Term 2 (Summer 2019)\\MET1 - Spatial Modeling and Prediction\\Polar Bear Data")
+setwd("D:\\Programme\\OneDrive\\EAGLE M.Sc\\Term 2 (Summer 2019)\\MET1 - Spatial Modeling and Prediction\\Polar Bear Distribution Modeling and Prediction\\Data")
 
 
 #' ====================================================================================================================================
@@ -67,10 +67,6 @@ if (file.exists("./GIS/study_area.shp")) {
   #' export the study area as a shapefile to disk:
   writeOGR(study_area, "./GIS", "study_area", driver="ESRI Shapefile", overwrite_layer=TRUE)
 }
-
-#' plot the study area on top of a bioclim variable:
-plot(raster(bio, 1))
-plot(study_area, add=TRUE)
 
 
 #' Download and read bioclim variables
@@ -141,6 +137,7 @@ if (file.exists("./GIS/Occurrence Data/Ursus maritimus.mif")) {
            "Ursus maritimus", driver="MapInfo File", dataset_options="FORMAT=MIF", overwrite_layer = TRUE)
 }
 
+dev.off ()
 plot(raster(biocrop, 1))
 plot(Ursus_maritimus, add = TRUE)
 
