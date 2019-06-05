@@ -292,8 +292,9 @@ barplot(100 * gamimp/sum(gamimp), ylab = "Variable importance (%)")
 #' Response functions
 plot(gammodel, pages = 1)
 
-#' png("gammodel_resp.png", 800, 800)
-#' plot(gammodel, pages = 1)
+#export to png:
+png("gammodel_response_functions.png", 800, 800)
+plot(gammodel, pages = 1)
 dev.off()
 
 #' Prediction map
