@@ -48,14 +48,14 @@ setwd("D:\\Programme\\OneDrive\\EAGLE M.Sc\\Term 2 (Summer 2019)\\MET1 - Spatial
 #' ------------------------------------------------------------------------------------------------
 
 if (file.exists("./GIS/study_area.shp")) {
-  atudy_area <- readOGR("./GIS/study_area.shp")
+  study_area <- readOGR("./GIS/study_area.shp")
   #' './' refers to the current working directory, i.e. we are specifying as the first argument of readOGR, the dsn, the subdirectory "GIS" within the current working directory
   #' make sure there is no trailing '/' in the value of the dsn argument, i.e. do **not** use "./GIS/"
   #' when importing shapefiles, drop the suffix from the layer argument, i.e. do **not** use "africa_dissolved.shp"
 } else {
   #' First, get the coordinates into a 2-column matrix:
   x_coord <- c(-180, -180, 180, 180)
-  y_coord <- c(90,  40,  40, 90)
+  y_coord <- c(90,  50,  50, 90)
   xym <- cbind(x_coord, y_coord)
   xym
   #' Then create a Polygon, wrap that into a Polygons object, then wrap that into a SpatialPolygons object:
@@ -112,6 +112,17 @@ biocrop <- crop(bio, extent(study_area) + 10)
 plot(raster(biocrop, 1))
 plot(sps, add=TRUE)
 
+#' As you can clearly see, the projection is not very good for visualisation in the polar regions.
+#' Therefore we change it to a polar projection
+
+#' definition of polar projection:
+polar_projection = CRS("+init=epsg:3995")
+
+#' reproject the raster:
+biocrop <- projectRaster(biocrop, crs=polar_projection, method="bilinear")
+
+plot(raster(biocrop, 1))
+
 
 #' Download and read occurrence data
 #' ------------------------------------------------------------------------------------------------
@@ -125,10 +136,12 @@ if (file.exists("./GIS/Occurrence Data/Ursus maritimus.mif")) {
   #' Download species location data from gbif
   Ursus_maritimus_0 <- gbif("Ursus", "maritimus")
   Ursus_maritimus <- subset(Ursus_maritimus_0,select=c("lat","lon"))
-  Ursus_maritimus <- na.omit(species)
+  Ursus_maritimus <- na.omit(Ursus_maritimus)
   coordinates(Ursus_maritimus) <- c("lon", "lat")  # set spatial coordinates
   #' Add projection information
   proj4string(Ursus_maritimus) <- CRS("+proj=longlat +datum=WGS84")
+  #' convert to the polar projection
+  Ursus_maritimus <- spTransform(Ursus_maritimus, CRS=polar_projection)
   #' Convert to Spatial Polygons Data Frame
   Ursus_maritimus.df <- data.frame( ID=1:length(Ursus_maritimus)) 
   Ursus_maritimus <- SpatialPointsDataFrame(Ursus_maritimus, Ursus_maritimus.df)
@@ -290,6 +303,9 @@ gammap <- predict(env, gammodel, type = "response")
 
 plot(gammap)
 
+
+
+plot(gammap_polar)
 
 #' Random Forest
 #' ------------------------------------------------------------------------------------------------
