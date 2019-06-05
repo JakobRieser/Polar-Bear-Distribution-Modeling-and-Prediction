@@ -13,7 +13,7 @@
 
 #' Occurrence data source: [gbif](http://www.gbif.org)  
 #' Environmental data source: [worldclim](http://www.worldclim.org)  
-#' Algorithms: GAM, RF, MaxEnt
+#' Algorithms: GAM, RF
 
 
 #' ====================================================================================================================================
@@ -328,40 +328,41 @@ par(mfrow=c(1, 1))
 plot(rfmap)
 
 
-##############WIP
+##############WIP##############
 
 #' Maxent
 #' ------------------------------------------------------------------------------------------------
 
 #' The following code assumes that the column with the species informatio is in the first position
-maxentmodel <- maxent(traindata@data[, -1], traindata[["species"]], 
-                      args = c("nothreshold", 
-                               "nohinge"))
+#maxentmodel <- maxent(traindata@data[, -1], traindata[["species"]], 
+#                      args = c("nothreshold", 
+#                               "nohinge"))
 
 #' Model evaluation on test data
-maxenttest <- predict(maxentmodel, testdata)
-val.prob(maxenttest, testdata[["species"]])
+#maxenttest <- predict(maxentmodel, testdata)
+#val.prob(maxenttest, testdata[["species"]])
 
 #' Alternatively, we can use the evaluate function
-maxente <- evaluate(p = maxenttest[testdata[["species"]] == 1],
-                    a = maxenttest[testdata[["species"]] == 0])
+#maxente <- evaluate(p = maxenttest[testdata[["species"]] == 1],
+#                    a = maxenttest[testdata[["species"]] == 0])
 
 #' Show variable importance
-plot(maxentmodel)
+#plot(maxentmodel)
 
 #' Plot response functions
-response(maxentmodel)
+#response(maxentmodel)
 
 #' Prediction map
-maxentmap <- predict(maxentmodel, env)
-plot(maxentmap)
+#maxentmap <- predict(maxentmodel, env)
+#plot(maxentmap)
 
 #' Plot predictions of several methods, using the same
 #' colour scheme
-par(mfrow = c(3, 1), mar = c(3, 3, 1, 1))
+par(mfrow = c(2, 1), mar = c(3, 3, 1, 1))
 brks <- seq(0, 1, by = 0.1)
 arg <- list(at = seq(0, 1, by = 0.2), labels = seq(0, 1, by = 0.2))
 col <- rev(terrain.colors(length(brks) - 1))
 plot(gammap, breaks = brks, col = col, axis.args = arg)
 plot(rfmap, breaks = brks, col = col, axis.args = arg)
-plot(maxentmap, breaks = brks, col = col, axis.args = arg)
+#plot(maxentmap, breaks = brks, col = col, axis.args = arg)
+
