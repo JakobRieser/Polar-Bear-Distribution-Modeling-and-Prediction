@@ -306,8 +306,7 @@ plot(gammap)
 #' Random Forest
 #' ------------------------------------------------------------------------------------------------
 
-#' randomForest requires the dependent variable to be a factor
-#' if we want to do classification
+#' randomForest requires the dependent variable to be a factor if we want to do classification
 rftraindata <- as(traindata, "data.frame")
 rftraindata$species <- factor(rftraindata$species)
 
@@ -339,8 +338,7 @@ rfmap <- predict(env, rfmodel, type = "prob", index = 2)
 par(mfrow=c(1, 1))
 plot(rfmap)
 
-#' Plot predictions of several methods, using the same
-#' colour scheme
+#' Plot predictions of several methods, using the same colour scheme
 par(mfrow = c(2, 1), mar = c(3, 3, 1, 1))
 brks <- seq(0, 1, by = 0.1)
 arg <- list(at = seq(0, 1, by = 0.2), labels = seq(0, 1, by = 0.2))
