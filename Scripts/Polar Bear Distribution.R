@@ -66,7 +66,6 @@ if (file.exists("./GIS/study_area.shp")) {
   writeOGR(study_area, "./GIS", "study_area", driver="ESRI Shapefile", overwrite_layer=TRUE)
 }
 
-
 #' Download and read bioclim variables
 #' ------------------------------------------------------------------------------------------------
 
