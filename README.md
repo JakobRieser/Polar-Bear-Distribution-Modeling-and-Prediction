@@ -1,3 +1,3 @@
 # Polar Bear Distribution and Prediction Modeling
 
-This project is to learn the basics of species distribution modeling
+The global distribution of polar bears is highly affected by climate change as their habitat is getting warmer and warmer. The current and future (2050) range was calculated based on land surface (worldclim) and sea surface (Bio-ORACLE) variables for both land and water areas. 
